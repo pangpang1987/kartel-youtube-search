@@ -4,19 +4,23 @@ import {
   INIT_SEARCH_STATE,
   setSearchKeyword
 } from 'store/searchInput';
+import { saveVideo } from 'store/saveVideo';
 
 const mapStateToProps = (state) => {
   const { search } = state;
   const {
-    keyword
+    keyword,
+    searchVideoList
   } = search || INIT_SEARCH_STATE;
   return {
-    keyword
+    keyword,
+    searchVideoList
   };
 };
 
 const mapActionCreators = {
-  setSearchKeyword
+  setSearchKeyword,
+  saveVideo
 };
 
 export default connect(mapStateToProps, mapActionCreators)(SearchView);

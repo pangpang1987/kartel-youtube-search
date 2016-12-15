@@ -1,0 +1,104 @@
+@import './_colors';
+@import './_mixins';
+
+.video-preview {
+  float: left;
+  width: 20%;
+  @include media('<md') {
+    width: 25%;
+  }
+  @include media('<sm') {
+    
+    width: 50%;
+  }
+  @include media('<xs') {
+    width: 100%;
+    .video-title {
+      font-size: 18px;
+    }
+    .thumbnail-wrapper > .video-details {
+      font-size: 14px;
+    }
+  }
+  .wrapper{
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    font-family: 'Lato', sans-serif;
+  }
+}
+
+.video-title {
+  cursor: pointer;
+  font-size: 16px;      
+  font-weight: 700;
+  width: 100%;      
+  line-height: 1.5em;
+  height: 3em;       /* height is 2x line-height, so two lines will display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $video-title-color;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.video-channel {
+  font-size: 12px;
+  line-height: 1.5em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.thumbnail-wrapper {
+  position: relative;
+
+  .save-wrapper {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    bottom: 0;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(255,255,255,0.6);
+      .save-button {
+        display: block;
+      }
+    }
+  }
+  .video-details {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    bottom: 0;
+    height: 1.5em;
+    font-size: 12px;
+    padding: 0 4px;
+    background-color: rgba(255,255,255,0.8);
+    color: $video-watch-color;
+    .video-playtimes {
+      float: left;
+    }
+    .video-upvotes{
+      float: right;
+    }
+  }
+}
+.video-thumbnail {
+  width: 100%;
+}
+.save-button {
+  display: none;
+  text-align: center;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%, -50%));
+  .glyphicon-heart {
+    font-size: 40px;
+    color: $save-color;
+  }
+  .save-instruction {
+    font-size: 14px;
+  }
+}
