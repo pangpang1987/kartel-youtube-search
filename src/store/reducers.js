@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import locationReducer from './location'
+import saveVideoReducer from 'store/saveVideo'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     // Add sync reducers here
     location: locationReducer,
+    savedVideos: saveVideoReducer,
     ...asyncReducers
   })
 }

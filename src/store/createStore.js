@@ -6,6 +6,7 @@ import { updateLocation } from './location';
 import effects from 'redux-effects';
 import multi from 'redux-multi';
 import fetch, { fetchEncodeJSON } from 'redux-effects-fetch';
+import persistState from 'redux-localstorage'
 
 export default (initialState = {}) => {
   // ======================================================
@@ -37,8 +38,8 @@ export default (initialState = {}) => {
   // ======================================================
   const store = createStore(
     makeRootReducer(),
-    initialState,
     composeEnhancers(
+      persistState('savedVideos', { key: 'savedVideos' }),
       applyMiddleware(...middleware),
       ...enhancers
     )

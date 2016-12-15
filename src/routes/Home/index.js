@@ -11,10 +11,9 @@ export default (store) => ({
           dependencies for bundling   */
       const SearchView = require('./containers/SearchViewContainer').default
       const reducer = require('store/searchInput').default
-
+      const saveVideoReducer = require('store/saveVideo').default
       /*  Add the reducer to the store on key 'counter'  */
       injectReducer(store, { key: 'search', reducer })
-
       /*  Return getComponent   */
       cb(null, SearchView)
 
