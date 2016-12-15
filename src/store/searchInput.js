@@ -2,24 +2,30 @@ import { bind } from 'redux-effects';
 import { fetch } from 'redux-effects-fetch';
 import { createAction, handleActions } from 'redux-actions';
 import { assignDefaults } from './utils/request';
+import { YOUTUBE_API_KEY } from 'config';
+
 const SET_KEYWORD = 'SET_KEYWORD';
 const SET_VIDEO_LIST = 'SET_VIDEO_LIST';
 
 export const INIT_SEARCH_STATE = {
   keyword: '',
-  keywordSuggestion: [],
   searchVideoList: []
 };
 
 const setKeyword = createAction(SET_KEYWORD);
+const setVideoList = createAction(SET_VIDEO_LIST);
 
-const fetchKeywordSuggestion = (keyword) => {
-
-  const apiURL = `http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=${keyword}`;
+const fetchVideoList = (keyword) => {
+  const apiURL = 'https://www.googleapis.com/youtube/v3/search?' + 
+    `&key=${YOUTUBE_API_KEY}` + 
+    '&maxResults=50' +
+    '&part=snippet' +
+    '&type=video' +
+    `&q=${keyword}`;
 
   const fetchSuccess = ({value}) => {
     return (dispatch, getState) => {
-      console.log(value);
+      dispatch(setVideoList(value.items))
     };
   };
 
@@ -30,20 +36,14 @@ const fetchKeywordSuggestion = (keyword) => {
   };
 
   return bind(fetch(apiURL, {
-    method: 'GET',
-    mode: 'no-cors'
+    method: 'GET'
   }), fetchSuccess, fetchFail);
-  /*fetch(apiURL,{'mode': 'no-cors'}, (response) => {
-    console.log(response);
-    if(response.status == 200) {
-      console.log(response.body);
-    }
-  })*/
 }
 
 export const setSearchKeyword = (keyword) => {
   return (dispatch, getState) => {
     dispatch(setKeyword(keyword));
+    dispatch(fetchVideoList(keyword));
   }
 }
 
@@ -52,6 +52,10 @@ const searchInputReducer = handleActions({
   SET_KEYWORD: (state, action) =>
     Object.assign({}, state, {
       keyword: action.payload
+    }),
+  SET_VIDEO_LIST: (state, action) =>
+    Object.assign({}, state, {
+      searchVideoList: action.payload
     })
 }, INIT_SEARCH_STATE);
 
