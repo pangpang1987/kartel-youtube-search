@@ -1,0 +1,28 @@
+.search-input-wrapper {
+  position: relative;
+  height: 100px;
+  padding: 20px 10%;
+}
+.search-input {
+  width: 100%;
+}
+.search-input-suggestion-wrapper {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  z-index: 20;
+}
+.suggestion-list {
+  width: 100%;
+  list-style: none;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  padding: 0 5px;
+  >li {
+    padding: 5px 20px;
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+    }
+  }
+}
