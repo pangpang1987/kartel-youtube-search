@@ -3,6 +3,7 @@ import locationReducer from './location'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
+    // Add sync reducers here
     location: locationReducer,
     ...asyncReducers
   })
