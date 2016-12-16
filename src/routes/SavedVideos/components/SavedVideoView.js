@@ -10,20 +10,28 @@ import VideoListView from 'components/VideoListView';
 export class SavedVideoView extends Component {
 
   static propTypes = {
+    savedVideoIdList: PropTypes.array,
     searchVideoList: PropTypes.array,
-    saveVideo: PropTypes.func,
-    setSearchKeyword: PropTypes.func
-  }
+    unSaveVideo: PropTypes.func
+  };
+  static defaultProps = {
+    savedVideoIdList: []
+  };
 
   render() {
 
     const {
-      savedVideoList
+      savedVideoIdList,
+      savedVideoList,
+      unSaveVideo
     } = this.props;
 
     return (
       <div>
-        <VideoListView videoList={savedVideoList} />
+        <VideoListView
+          savedVideoIdList={savedVideoIdList}
+          videoList={savedVideoList}
+          unSaveVideo={unSaveVideo} />
       </div>
     );
   }

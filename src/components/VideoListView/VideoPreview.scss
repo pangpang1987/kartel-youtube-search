@@ -63,6 +63,9 @@
       .save-button {
         display: block;
       }
+      .save-indicator {
+        display: none;
+      }
     }
   }
   .video-details {
@@ -96,9 +99,19 @@
   @include transform(translate(-50%, -50%));
   .glyphicon-heart {
     font-size: 40px;
-    color: $save-color;
+    &.save{
+      color: $save-color;
+    }
+    &.unsave {
+      color: #333333;
+    }
   }
   .save-instruction {
     font-size: 14px;
   }
+}
+.save-indicator {
+  color: $save-color;
+  font-size: 12px;
+  padding: 4px;
 }

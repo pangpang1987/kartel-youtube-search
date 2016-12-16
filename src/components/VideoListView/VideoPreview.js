@@ -35,15 +35,23 @@ class VideoPreview extends Component {
   }
 
   static propTypes = {
-    video: PropTypes.object.isRequired
+    isSaved: PropTypes.bool,
+    video: PropTypes.object.isRequired,
+    saveVideo: PropTypes.func,
+    unSaveVideo: PropTypes.func
   }
 
   handleSaveVideo = () => {
-    this.props.saveVideo(this.props.video);
+    const { isSaved, saveVideo, unSaveVideo, video } = this.props;
+    if (isSaved) {
+      unSaveVideo(video);
+    } else {
+      saveVideo(video);
+    }    
   }
 
   render() {
-    const { video: { snippet } } = this.props;
+    const { video: { snippet }, isSaved } = this.props;
     const { playTimes, upvotes } = this.state;
     return (
       <li className="video-preview">
@@ -61,17 +69,27 @@ class VideoPreview extends Component {
               </span>
             </div>
             <div className="save-wrapper" onClick={this.handleSaveVideo}>
-              <div className="save-button">
-                <div>
-                  <span className="glyphicon glyphicon-heart"></span>
-                </div>
-                <span className="save-instruction">Save</span>
+              <div className="save-indicator">
+                { isSaved ? <span className={'glyphicon glyphicon-heart save'}></span> : null }
               </div>
+              { isSaved ?
+                <div className="save-button">
+                  <div><span className={'glyphicon glyphicon-heart unsave'}></span></div>
+                  <span className="save-instruction">UnSave</span>
+                </div> :
+                <div className="save-button">
+                  <div>
+                    <span className={'glyphicon glyphicon-heart save'}></span>
+                  </div>
+                  <span className="save-instruction">
+                    Save
+                  </span>
+                </div>
+              }              
             </div>
           </div>
           <div className="video-title">{snippet.title}</div>
           <div className="video-channel">{snippet.channelTitle}</div>
-
         </div>
       </li>
     );
