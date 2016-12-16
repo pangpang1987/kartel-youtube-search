@@ -16,10 +16,6 @@ class SearchInput extends Component {
     super(props);
     this.state = {
       suggestions: [],
-      filter: {
-        category: '',
-        year: ''
-      },
       isFilterOpen: false
     };
   }
@@ -34,12 +30,15 @@ class SearchInput extends Component {
   static propTypes = {
     keyword: PropTypes.string,
     categoriesList: PropTypes.array,
-    setSearchKeyword: PropTypes.func
+    setSearchKeyword: PropTypes.func,
+    filter: PropTypes.object.isRequired,
+    setFilter: PropTypes.func,
+    resetFilter: PropTypes.func
   }
 
   handleBackgroundClick = (event) => {
-    const area = ReactDOM.findDOMNode(this.refs.dropdown);
-    if (!area.contains(event.target)) {
+    const dropdown = ReactDOM.findDOMNode(this.refs.dropdown);
+    if (!dropdown.contains(event.target)) {
       this.clearKeywordSuggestion();
     }
   }
@@ -79,14 +78,14 @@ class SearchInput extends Component {
     });
   }
   handleCategorySelect = (value) => {
-    this.setState({
-      filter: Object.assign({}, this.state.filter, {category: value})
+    this.props.setFilter({
+      category: value
     });
   }
   handleYearChange = (value) => {
-    this.setState({
-      filter: Object.assign({}, this.state.filter, {year: value})
-    })
+    this.props.setFilter({
+      year: value
+    });
   }
 
   keywordSelect = (index) => {
@@ -100,8 +99,8 @@ class SearchInput extends Component {
   }
 
   render() {
-    const { keyword, categoriesList } = this.props;
-    const { suggestions, isFilterOpen, filter } = this.state;
+    const { keyword, categoriesList, filter } = this.props;
+    const { suggestions, isFilterOpen } = this.state;
     return (
       <div className="search-input-wrapper">
         <input
@@ -114,7 +113,7 @@ class SearchInput extends Component {
         <div className="filter-button">
           <button onClick={this.handleFilterToggle}>
             <span className="glyphicon glyphicon-filter"></span>
-            filter
+            { isFilterOpen ? 'Close filter' : 'filter' }
           </button>
         </div>
         <div className="search-input-dropdown" ref="dropdown">
@@ -130,7 +129,9 @@ class SearchInput extends Component {
           {
             isFilterOpen ? 
             <div className="filter-wrapper">
-              <button className="clear-filter pull-right">Clear filter</button>
+              <button className="clear-filter pull-right" onClick={this.props.resetFilter}>
+                Clear filter
+              </button>
               <div className="filter-section">
                 <div className="filter-title">
                   Category
@@ -147,7 +148,7 @@ class SearchInput extends Component {
                   {' '}
                   <span className="filter-content">{filter.year}</span>
                 </div>
-                <Slider onChange={this.handleYearChange} min={2005} max={2016} value={isNaN(filter.year) ? 2016 : filter.year} />
+                <Slider onChange={this.handleYearChange} min={2005} max={2016} value={isNaN(filter.year) ? 0 : filter.year} />
               </div>
             </div> : null
           }
