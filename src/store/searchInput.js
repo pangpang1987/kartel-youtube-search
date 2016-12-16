@@ -76,7 +76,8 @@ const fetchVideoList = (keyword, filter, pageToken) => {
     apiURL += `&videoCategoryId=${filter.category.value}`;
   }
 
-  if (pageToken) {
+  if (pageToken !== undefined) {
+    console.log(pageToken);
     apiURL += `&pageToken=${pageToken}`;
   }
 
@@ -123,7 +124,7 @@ export const setFilter = (changeFilter) => {
       return;
     }
     dispatch(setSearchFilter(changeFilter));
-    dispatch(processFetchVideoList(changeFilter));
+    dispatch(processFetchVideoList());
   }
 }
 export const resetFilter = () => {

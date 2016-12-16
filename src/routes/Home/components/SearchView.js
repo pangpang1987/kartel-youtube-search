@@ -55,14 +55,18 @@ export class SearchView extends Component {
           keyword={keyword}
           setSearchKeyword={setSearchKeyword}
           categoriesList={categoriesList} />
-        <VideoListView
-          videoList={searchVideoList}
-          saveVideo={saveVideo}
-          unSaveVideo={unSaveVideo}
-          savedVideoIdList={savedVideoIdList} />
-        <div className="pagination-wrapper">
-          <Pagination pageToken={pageToken} goToPage={goToPage} />
-        </div>
+        <section className="video-content">
+          <VideoListView
+            videoList={searchVideoList}
+            saveVideo={saveVideo}
+            unSaveVideo={unSaveVideo}
+            savedVideoIdList={savedVideoIdList} />
+          <div className="pagination-wrapper">
+            {
+              keyword.trim().length ? <Pagination pageToken={pageToken} goToPage={goToPage} /> : null
+            }
+          </div>
+        </section>
       </div>
     );
   }

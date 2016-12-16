@@ -2,15 +2,21 @@
 @import './_mixins';
 
 .search-input-wrapper {
-  position: relative;
+  position: fixed;
   height: 100px;
   width: 100%;
-  padding: 20px 8px;
-  text-align: left;
+  padding: 20px 50px;
+  z-index: 15;
+  @include media('<md') {
+    padding: 20px 30px;
+  }
+  @include media('<sm') {
+    padding: 20px;
+  }
 }
 .search-input {
   display: inline-block;
-  width: 80%;
+  width: calc(100% - 110px);
   box-shadow: none;
   @include border-radius-separate(5px, 0, 5px, 0);
   &:focus{
@@ -18,8 +24,10 @@
   }
 }
 .filter-button {
+  width: 110px;
   display: inline-block;
   >button {
+    width: 100%;
     height: 34px;
     padding: 0 10px;
     margin-left: -1px;
@@ -35,7 +43,6 @@
   }
 }
 .search-input-dropdown {
-  position: absolute;
   width: 100%;
   z-index: 20;
 }

@@ -13,7 +13,7 @@ class CoreLayout extends Component {
 
   render() {
     return (
-      <div className='container text-center'>
+      <div>
         <Header />
         <div className='core-layout__viewport'>
           {this.props.children}

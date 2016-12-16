@@ -1,3 +1,19 @@
+@import './_colors';
+@import './_mixins';
+
+.video-content {
+  position: absolute;
+  overflow-y: auto;
+  top: 135px;
+  bottom: 0;
+  padding: 0 50px;
+  @include media('<md') {
+    padding: 20px 30px;
+  }
+  @include media('<sm') {
+    padding: 20px;
+  }
+}
 .pagination-wrapper {
   width: 100%;
   float: left;
