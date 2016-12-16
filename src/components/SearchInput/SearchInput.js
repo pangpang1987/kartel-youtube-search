@@ -3,8 +3,12 @@ import React, {
   PropTypes
 } from 'react';
 import './SearchInput.scss';
+import './Slider.scss';
+import './Dropdown.css';
 import JSONP from 'jsonp';
 import ReactDOM from 'react-dom';
+import Dropdown from 'react-dropdown';
+import Slider from 'react-rangeslider';
 
 class SearchInput extends Component {
 
@@ -12,6 +16,10 @@ class SearchInput extends Component {
     super(props);
     this.state = {
       suggestions: [],
+      filter: {
+        category: '',
+        year: ''
+      },
       isFilterOpen: false
     };
   }
@@ -25,6 +33,7 @@ class SearchInput extends Component {
 
   static propTypes = {
     keyword: PropTypes.string,
+    categoriesList: PropTypes.array,
     setSearchKeyword: PropTypes.func
   }
 
@@ -69,6 +78,16 @@ class SearchInput extends Component {
       isFilterOpen: !this.state.isFilterOpen
     });
   }
+  handleCategorySelect = (value) => {
+    this.setState({
+      filter: Object.assign({}, this.state.filter, {category: value})
+    });
+  }
+  handleYearChange = (value) => {
+    this.setState({
+      filter: Object.assign({}, this.state.filter, {year: value})
+    })
+  }
 
   keywordSelect = (index) => {
     this.props.setSearchKeyword(this.state.suggestions[index][0]);
@@ -81,8 +100,8 @@ class SearchInput extends Component {
   }
 
   render() {
-    const { keyword } = this.props;
-    const { suggestions, isFilterOpen } = this.state;
+    const { keyword, categoriesList } = this.props;
+    const { suggestions, isFilterOpen, filter } = this.state;
     return (
       <div className="search-input-wrapper">
         <input
@@ -98,20 +117,39 @@ class SearchInput extends Component {
             filter
           </button>
         </div>
-        <div className="search-input-suggestion-wrapper" ref="dropdown">
+        <div className="search-input-dropdown" ref="dropdown">
           <ul className="suggestion-list">
-            {suggestions.map((item, index) => {
-              return (
-                <li key={index} onClick={() => this.keywordSelect(index)}>
-                  {item[0]}
-                </li>
-              );
-            })}
+            {suggestions.map((item, index) =>
+              <li key={index} onClick={() => this.keywordSelect(index)}>
+                {item[0]}
+              </li>
+            )}
           </ul>
         </div>
-        <div className="search-input-filter-wrapper" ref="filter">
+        <div className="search-input-dropdown" ref="filter">
           {
-            isFilterOpen ? <div>something here</div> : null
+            isFilterOpen ? 
+            <div className="filter-wrapper">
+              <button className="clear-filter pull-right">Clear filter</button>
+              <div className="filter-section">
+                <div className="filter-title">
+                  Category
+                </div>
+                <Dropdown
+                  options={categoriesList}
+                  onChange={this.handleCategorySelect}
+                  value={filter.category}
+                  placeholder="Select an option" />
+              </div>
+              <div className="filter-section">
+                <div className="filter-title">
+                  Year
+                  {' '}
+                  <span className="filter-content">{filter.year}</span>
+                </div>
+                <Slider onChange={this.handleYearChange} min={2005} max={2016} value={isNaN(filter.year) ? 2016 : filter.year} />
+              </div>
+            </div> : null
           }
         </div>
       </div>

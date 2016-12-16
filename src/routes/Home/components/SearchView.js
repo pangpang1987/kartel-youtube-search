@@ -13,9 +13,15 @@ export class SearchView extends Component {
     keyword: PropTypes.string.isRequired,
     searchVideoList: PropTypes.array.isRequired,
     savedVideoIdList: PropTypes.array.isRequired,
+    categoriesList: PropTypes.array,
     saveVideo: PropTypes.func.isRequired,
     unSaveVideo: PropTypes.func.isRequired,
-    setSearchKeyword: PropTypes.func.isRequired
+    setSearchKeyword: PropTypes.func.isRequired,
+    fetchCategories: PropTypes.func.isRequired
+  }
+
+  componentDidMount() {
+    this.props.fetchCategories();
   }
 
   render() {
@@ -26,12 +32,16 @@ export class SearchView extends Component {
       savedVideoIdList,
       saveVideo,
       unSaveVideo,
-      setSearchKeyword
+      setSearchKeyword,
+      categoriesList
     } = this.props;
 
     return (
       <div>
-        <SearchInput keyword={keyword} setSearchKeyword={setSearchKeyword} />
+        <SearchInput
+          keyword={keyword}
+          setSearchKeyword={setSearchKeyword}
+          categoriesList={categoriesList} />
         <VideoListView
           videoList={searchVideoList}
           saveVideo={saveVideo}

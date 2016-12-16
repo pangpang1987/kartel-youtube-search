@@ -2,25 +2,33 @@ import connect from 'store/utils/connect';
 import SearchView from '../components/SearchView';
 import {
   INIT_SEARCH_STATE,
-  setSearchKeyword
+  setSearchKeyword,
+  fetchCategories
 } from 'store/searchInput';
-import { INIT_SAVE_STATE, saveVideo, unSaveVideo } from 'store/saveVideo';
+import {
+  INIT_SAVE_STATE,
+  saveVideo,
+  unSaveVideo
+} from 'store/saveVideo';
 
 const mapStateToProps = (state) => {
   const { search, savedVideos } = state;
   const {
     keyword,
-    searchVideoList
+    searchVideoList,
+    categoriesList
   } = search || INIT_SEARCH_STATE;
   const { savedVideoIdList } = savedVideos || INIT_SAVE_STATE;
   return {
     keyword,
     searchVideoList,
-    savedVideoIdList
+    savedVideoIdList,
+    categoriesList
   };
 };
 
 const mapActionCreators = {
+  fetchCategories,
   setSearchKeyword,
   saveVideo,
   unSaveVideo

@@ -29,13 +29,17 @@
     &:hover {
       border-color: #66afe9;
     }
+    &:active, &:focus{
+      outline: none;
+    }
   }
 }
-.search-input-suggestion-wrapper {
+.search-input-dropdown {
   position: absolute;
   width: 100%;
   z-index: 20;
 }
+
 .suggestion-list {
   background-color: rgba(255,255,255,0.95);
   width: 100%;
@@ -49,5 +53,30 @@
       background-color: #eee;
       cursor: pointer;
     }
+  }
+}
+.filter-wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 20px;
+  @include border-radius(5px);
+  .clear-filter {
+    box-shadow: none;
+    padding: 4px;
+    height: 36px;
+    @include border-radius(4px);
+    background: none;
+    border: 1px solid #ccc;
+  }
+}
+.filter-section {
+  padding: 10px;
+  .filter-title {
+    font-size: 16px;
+    line-height: 38px;
+  }
+  .filter-content {
+    font-size: 12px;
   }
 }
