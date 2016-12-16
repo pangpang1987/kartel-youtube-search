@@ -1,15 +1,39 @@
+@import './_colors';
+@import './_mixins';
+
 .search-input-wrapper {
   position: relative;
   height: 100px;
-  padding: 20px 10%;
+  width: 100%;
+  padding: 20px 8px;
+  text-align: left;
 }
 .search-input {
-  width: 100%;
+  display: inline-block;
+  width: 80%;
+  box-shadow: none;
+  @include border-radius-separate(5px, 0, 5px, 0);
+  &:focus{
+    box-shadow: none;
+  }
+}
+.filter-button {
+  display: inline-block;
+  >button {
+    height: 34px;
+    padding: 0 10px;
+    margin-left: -1px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    @include border-radius-separate(0, 5px, 0, 5px);
+    &:hover {
+      border-color: #66afe9;
+    }
+  }
 }
 .search-input-suggestion-wrapper {
   position: absolute;
-  left: 10%;
-  right: 10%;
+  width: 100%;
   z-index: 20;
 }
 .suggestion-list {

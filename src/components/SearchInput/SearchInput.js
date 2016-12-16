@@ -11,7 +11,8 @@ class SearchInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      suggestions: []
+      suggestions: [],
+      isFilterOpen: false
     };
   }
 
@@ -63,6 +64,12 @@ class SearchInput extends Component {
     this.getKeywordSuggestion(keyword);
   }
 
+  handleFilterToggle = () => {
+    this.setState({
+      isFilterOpen: !this.state.isFilterOpen
+    });
+  }
+
   keywordSelect = (index) => {
     this.props.setSearchKeyword(this.state.suggestions[index][0]);
     this.clearKeywordSuggestion();
@@ -75,7 +82,7 @@ class SearchInput extends Component {
 
   render() {
     const { keyword } = this.props;
-    const { suggestions } = this.state;
+    const { suggestions, isFilterOpen } = this.state;
     return (
       <div className="search-input-wrapper">
         <input
@@ -85,6 +92,12 @@ class SearchInput extends Component {
           value={keyword}
           onChange={this.handleChange}
           onFocus={this.handleFocus} />
+        <div className="filter-button">
+          <button onClick={this.handleFilterToggle}>
+            <span className="glyphicon glyphicon-filter"></span>
+            filter
+          </button>
+        </div>
         <div className="search-input-suggestion-wrapper" ref="dropdown">
           <ul className="suggestion-list">
             {suggestions.map((item, index) => {
@@ -95,6 +108,11 @@ class SearchInput extends Component {
               );
             })}
           </ul>
+        </div>
+        <div className="search-input-filter-wrapper" ref="filter">
+          {
+            isFilterOpen ? <div>something here</div> : null
+          }
         </div>
       </div>
     );
