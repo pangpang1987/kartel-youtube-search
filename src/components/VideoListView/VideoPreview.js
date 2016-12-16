@@ -74,11 +74,13 @@ class VideoPreview extends Component {
               </div>
               { isSaved ?
                 <div className="save-button">
-                  <div><span className={'glyphicon glyphicon-heart unsave'}></span></div>
+                  <div style={{height: '32px'}}>
+                    <span className={'glyphicon glyphicon-heart unsave'}></span>
+                  </div>
                   <span className="save-instruction">UnSave</span>
                 </div> :
                 <div className="save-button">
-                  <div>
+                  <div style={{height: '32px'}}>
                     <span className={'glyphicon glyphicon-heart save'}></span>
                   </div>
                   <span className="save-instruction">

@@ -98,7 +98,7 @@
   left: 50%;
   @include transform(translate(-50%, -50%));
   .glyphicon-heart {
-    font-size: 40px;
+    font-size: 32px;
     &.save{
       color: $save-color;
     }
