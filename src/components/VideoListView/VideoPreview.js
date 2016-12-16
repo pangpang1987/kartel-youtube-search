@@ -49,6 +49,10 @@ class VideoPreview extends Component {
       saveVideo(video);
     }    
   }
+  goToVideo = () => {
+    const videoID = this.props.video.id.videoId;
+    window.open(`https://www.youtube.com/watch?v=${videoID}`, '_blank');
+  }
 
   render() {
     const { video: { snippet }, isSaved } = this.props;
@@ -90,7 +94,7 @@ class VideoPreview extends Component {
               }              
             </div>
           </div>
-          <div className="video-title">{snippet.title}</div>
+          <div onClick={this.goToVideo} className="video-title">{snippet.title}</div>
           <div className="video-channel">{snippet.channelTitle}</div>
         </div>
       </li>
