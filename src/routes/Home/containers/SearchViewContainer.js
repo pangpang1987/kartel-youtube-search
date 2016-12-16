@@ -5,7 +5,8 @@ import {
   setSearchKeyword,
   fetchCategories,
   setFilter,
-  resetFilter
+  resetFilter,
+  goToPage
 } from 'store/searchInput';
 import {
   INIT_SAVE_STATE,
@@ -19,7 +20,8 @@ const mapStateToProps = (state) => {
     keyword,
     searchVideoList,
     categoriesList,
-    filter
+    filter,
+    pageToken
   } = search || INIT_SEARCH_STATE;
   const { savedVideoIdList } = savedVideos || INIT_SAVE_STATE;
   return {
@@ -27,7 +29,8 @@ const mapStateToProps = (state) => {
     searchVideoList,
     savedVideoIdList,
     categoriesList,
-    filter
+    filter,
+    pageToken
   };
 };
 
@@ -37,7 +40,8 @@ const mapActionCreators = {
   saveVideo,
   unSaveVideo,
   setFilter,
-  resetFilter
+  resetFilter,
+  goToPage
 };
 
 export default connect(mapStateToProps, mapActionCreators)(SearchView);

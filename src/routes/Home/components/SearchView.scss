@@ -1,1 +1,7 @@
-
+.pagination-wrapper {
+  width: 100%;
+  float: left;
+  .pager > li > a {
+    margin: 0 10px;
+  }
+}

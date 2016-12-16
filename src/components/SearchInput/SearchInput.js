@@ -104,8 +104,9 @@ class SearchInput extends Component {
     return (
       <div className="search-input-wrapper">
         <input
+          autoFocus
           type="text"
-          placeholder="Search"
+          placeholder="Search youtube"
           className="form-control search-input"
           value={keyword}
           onChange={this.handleChange}

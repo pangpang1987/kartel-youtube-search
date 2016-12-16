@@ -3,6 +3,7 @@
 This project is designed to searches the youtube with some basic filtering, and ability to save favourites.
 
 ## Setup Guide
+
 ### clone project
 First, clone the project:
 ```bash
@@ -22,6 +23,7 @@ Open browser and goto `http://localhost:3000`
 
 ## Things to change in the future
 ### Filter dropdown close machanism
+### Auto completion keyboard selection
 ### Button apparence
 ### Scroll bar error handling
 

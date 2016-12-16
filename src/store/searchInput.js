@@ -9,6 +9,7 @@ const SET_VIDEO_LIST = 'SET_VIDEO_LIST';
 const SET_CATEGORIES_LIST = 'SET_CATEGORIES_LIST';
 const SET_SEATCH_FILTER = 'SET_SEATCH_FILTER';
 const RESET_SEARCH_FILTER = 'RESET_SEARCH_FILTER';
+const SET_PAGE_TOKEN = 'SET_PAGE_TOKEN';
 
 export const INIT_SEARCH_STATE = {
   filter: {
@@ -17,7 +18,11 @@ export const INIT_SEARCH_STATE = {
   },
   categoriesList: [],
   keyword: '',
-  searchVideoList: []
+  searchVideoList: [],
+  pageToken: {
+    prevPageToken: '',
+    nextPageToken: ''
+  }
 };
 
 const setKeyword = createAction(SET_KEYWORD);
@@ -25,6 +30,7 @@ const setVideoList = createAction(SET_VIDEO_LIST);
 const setCategoriesList = createAction(SET_CATEGORIES_LIST);
 const setSearchFilter = createAction(SET_SEATCH_FILTER);
 const resetSearchFilter = createAction(RESET_SEARCH_FILTER);
+const setPageToken = createAction(SET_PAGE_TOKEN);
 
 export const fetchCategories = () => {
   const apiURL = 'https://www.googleapis.com/youtube/v3/videoCategories?' +
@@ -50,7 +56,7 @@ export const fetchCategories = () => {
   }), fetchSuccess, fetchFail);
 }
 
-const fetchVideoList = (keyword, filter) => {
+const fetchVideoList = (keyword, filter, pageToken) => {
 
   let apiURL = 'https://www.googleapis.com/youtube/v3/search?' + 
     `&key=${YOUTUBE_API_KEY}` + 
@@ -63,17 +69,23 @@ const fetchVideoList = (keyword, filter) => {
     return setVideoList([]);
   }
   if (filter.year) {
-    apiURL += ('&publishedBefore=' + `${filter.year + 1}-01-01T00:00:00Z`);
-    apiURL += ('&publishedAfter=' + `${filter.year}-01-01T00:00:00Z`);
+    apiURL += `&publishedBefore=${filter.year + 1}-01-01T00:00:00Z`;
+    apiURL += `&publishedAfter=${filter.year}-01-01T00:00:00Z`;
   }
   if (filter.category) {
-    apiURL += ('&videoCategoryId=' + `${filter.category.value}`);
+    apiURL += `&videoCategoryId=${filter.category.value}`;
   }
 
-  
+  if (pageToken) {
+    apiURL += `&pageToken=${pageToken}`;
+  }
 
   const fetchSuccess = ({value}) => {
     return (dispatch, getState) => {
+      dispatch(setPageToken({
+        prevPageToken: value.prevPageToken,
+        nextPageToken: value.nextPageToken
+      }))
       dispatch(setVideoList(value.items))
     };
   };
@@ -89,10 +101,10 @@ const fetchVideoList = (keyword, filter) => {
   }), fetchSuccess, fetchFail);
 }
 
-const processFetchVideoList = (changeFilter) => {
+const processFetchVideoList = (pageToken) => {
   return (dispatch, getState) => {
     const { search: { keyword, filter } } = getState();
-    dispatch(fetchVideoList(keyword, filter));
+    dispatch(fetchVideoList(keyword, filter, pageToken));
   }
 }
 
@@ -120,6 +132,11 @@ export const resetFilter = () => {
     dispatch(processFetchVideoList());
   }
 }
+export const goToPage = (pageToken) => {
+  return (dispatch, getState) => {
+    dispatch(processFetchVideoList(pageToken));
+  }
+}
 
 const searchInputReducer = handleActions({
 
@@ -145,6 +162,10 @@ const searchInputReducer = handleActions({
         category: '',
         year: ''
       }
+    }),
+  SET_PAGE_TOKEN: (state, action) =>
+    Object.assign({}, state, {
+      pageToken: action.payload
     })
 }, INIT_SEARCH_STATE);
 

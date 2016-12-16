@@ -6,6 +6,7 @@ import SearchInput from 'components/SearchInput';
 import './SearchView.scss';
 
 import VideoListView from 'components/VideoListView';
+import Pagination from './Pagination';
 
 export class SearchView extends Component {
 
@@ -20,7 +21,8 @@ export class SearchView extends Component {
     fetchCategories: PropTypes.func.isRequired,
     filter: PropTypes.object.isRequired,
     setFilter: PropTypes.func.isRequired,
-    resetFilter: PropTypes.func.isRequired
+    resetFilter: PropTypes.func.isRequired,
+    pageToken: PropTypes.object.isRequired
   }
 
   componentDidMount() {
@@ -39,7 +41,9 @@ export class SearchView extends Component {
       categoriesList,
       filter,
       setFilter,
-      resetFilter
+      resetFilter,
+      pageToken,
+      goToPage
     } = this.props;
 
     return (
@@ -56,6 +60,9 @@ export class SearchView extends Component {
           saveVideo={saveVideo}
           unSaveVideo={unSaveVideo}
           savedVideoIdList={savedVideoIdList} />
+        <div className="pagination-wrapper">
+          <Pagination pageToken={pageToken} goToPage={goToPage} />
+        </div>
       </div>
     );
   }
